@@ -1,20 +1,25 @@
 import React, {useState, useEffect} from 'react'
 import { Form, Button } from 'semantic-ui-react'
 import '../App.css'
+import {fetchUser} from '../redux/actions'
+import {connect} from 'react-redux'
 
 
-function Login(){
-    // const [username, setUsername] = useState('');
-
+const Login = (props) => {
+   const [username, setusername] = useState('');
     return(
         <Form className='form'>
-    <Form.Field>
+    <Form.Field onChange={(e) => setusername(e.target.value)} value={username}>
       <label>Username</label>
       <input />
     </Form.Field>
-    <Button type='submit'>Login</Button>
+    <Button onClick={() => props.fetchUser(username) } type='submit'>Login</Button>
   </Form>
     )
 }
 
-export default Login
+const mapDispatchToProps = (dispatch) => {
+  return {fetchUser: (username) =>{dispatch(fetchUser(username))}}
+}
+
+export default connect(null, mapDispatchToProps)(Login)

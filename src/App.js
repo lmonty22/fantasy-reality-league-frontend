@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import {Route, Switch} from 'react-router-dom'
+import { Route, Switch, withRouter, Redirect} from "react-router-dom"
 import NavBar from './components/NavBar'
 import LeagueForm from './components/LeagueForm'
 import Login from './components/Login'
+import {connect} from 'react-redux'
 
 
 const App = () => {
@@ -15,20 +16,30 @@ const App = () => {
 
     return(
     <div className='app'> 
-      {loading? <p>This page is still loading</p>: 
-        <div> 
             <NavBar />
+            {loading? <div className='spinnerDiv'>This page is loading</div>:
             <Switch>
-              <Route exact path='/' render={() => <div>This is the homepage</div>} />
-              <Route exact path='/newleague' render={LeagueForm} />
-              <Route exact path='/login' render={Login}/>
-            </Switch>
-        </div>}
+          <Route exact path="/" render={() => <div>This is the homepage</div>}/>
+          <Route exact path='/login' component={Login}/>
+          <Route exact path='/newleague' component={LeagueForm}/>
+          <Route render={()=> <div>404 No Route Found</div> } />
+      </Switch> 
+      }
     </div>
     )
  }
 
-export default App 
+ const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
+ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 
 
 
