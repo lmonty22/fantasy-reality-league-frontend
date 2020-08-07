@@ -42,5 +42,14 @@ const postLeague = (obj) => {
     }
 }
 
+const fetchLeague = (leagueId) => {
+    return async(dispatch) => {
+        const response = await fetch(URL+`leagues/${leagueId}`)
+        const league = await response.json()
+        console.log(league)
+        dispatch(setLeague(league))
+    }
+}
 
-export {fetchUser, postLeague}
+
+export {fetchUser, postLeague, fetchLeague}

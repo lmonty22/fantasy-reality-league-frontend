@@ -5,6 +5,7 @@ import LeagueForm from './components/LeagueForm'
 import Login from './components/Login'
 import {connect} from 'react-redux'
 import ProfilePage from './containers/ProfilePage'
+import LeaguePage from './containers/LeaguePage'
 
 
 const App = (props) => {
@@ -24,6 +25,9 @@ const App = (props) => {
           <Route exact path='/login' render={() => props.currentUser? <Redirect to='/profile'/>: <Login/>} />
           <Route exact path='/newleague' render={() => props.currentUser? <LeagueForm />: <Redirect to='/login'/>}/>
           <Route exact path='/profile' render={() => props.currentUser?  <ProfilePage/>: <Redirect to='/login'/>} />
+          <Route exact path="/leagues/:id" render={(props) => {
+            return <LeaguePage {...props}/>
+          }}/>
           <Route render={()=> <div>404 No Route Found</div> } />
       </Switch> 
       }
@@ -31,9 +35,10 @@ const App = (props) => {
     )
  }
 
- const mapStateToProps = (state) => {
+ const mapStateToProps = (state, ownProps) => {
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    currentLeague: state.currentLeague,
   }
 }
 
