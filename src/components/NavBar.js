@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
 import { Menu } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
-const NavBar = () => {
+const NavBar = (props) => {
     const [activeItem, setactiveItem] = useState('editorials');
     return(
         <Menu>
@@ -14,13 +15,24 @@ const NavBar = () => {
             Home
         </Menu.Item></Link>
 
-       <Link to='/login'><Menu.Item
+
+       {props.currentUser? 
+        <Link to='/profile'>
+          <Menu.Item
+          name='Profile'
+          active={activeItem === 'profile'}
+          onClick={() => setactiveItem('profile')}>
+            Profile
+          </Menu.Item>
+        </Link>
+       
+       :<Link to='/login'><Menu.Item
           name='Login'
           active={activeItem === 'login'}
           onClick={() => setactiveItem('login')}
         >
           Login
-        </Menu.Item></Link> 
+    </Menu.Item></Link> }
 
         <Link to='/newleague'>
         <Menu.Item
@@ -35,4 +47,11 @@ const NavBar = () => {
     )
 }
 
-export default NavBar
+
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+export default connect(mapStateToProps)(NavBar)

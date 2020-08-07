@@ -4,9 +4,10 @@ import NavBar from './components/NavBar'
 import LeagueForm from './components/LeagueForm'
 import Login from './components/Login'
 import {connect} from 'react-redux'
+import ProfilePage from './containers/ProfilePage'
 
 
-const App = () => {
+const App = (props) => {
     const [loading, setLoading] = useState(true);
 
     // component did mount
@@ -20,8 +21,9 @@ const App = () => {
             {loading? <div className='spinnerDiv'>This page is loading</div>:
             <Switch>
           <Route exact path="/" render={() => <div>This is the homepage</div>}/>
-          <Route exact path='/login' component={Login}/>
+          <Route exact path='/login' render={() => props.currentUser? <Redirect to='/profile'/>: <Login/>} />
           <Route exact path='/newleague' component={LeagueForm}/>
+          <Route exact path='/profile' render={() => props.currentUser?  <ProfilePage/>: <Redirect to='/login'/>} />
           <Route render={()=> <div>404 No Route Found</div> } />
       </Switch> 
       }
@@ -31,6 +33,7 @@ const App = () => {
 
  const mapStateToProps = (state) => {
   return {
+    currentUser: state.currentUser
   }
 }
 
