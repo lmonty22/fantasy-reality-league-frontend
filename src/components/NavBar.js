@@ -24,8 +24,7 @@ const NavBar = (props) => {
           onClick={() => setactiveItem('profile')}>
             Profile
           </Menu.Item>
-        </Link>
-       
+        </Link>   
        :<Link to='/login'><Menu.Item
           name='Login'
           active={activeItem === 'login'}
@@ -34,6 +33,7 @@ const NavBar = (props) => {
           Login
     </Menu.Item></Link> }
 
+    {props.currentUser?
         <Link to='/newleague'>
         <Menu.Item
           name='Create League'
@@ -42,7 +42,7 @@ const NavBar = (props) => {
         >
             Create League
         </Menu.Item>
-        </Link>
+        </Link>: null }
       </Menu>
     )
 }

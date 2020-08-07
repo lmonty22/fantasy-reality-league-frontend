@@ -18,10 +18,20 @@ const userReducer = (state=null, action) => {
     }
 }
 
+const leagueReducer = (state= null, action) => {
+    switch(action.type){
+        case "SET_CURRENT_LEAGUE":
+            return action.payload
+        default:
+            return state
+    }
+}
+
 
 const rootReducer = combineReducers({
     leagues: leaguesReducer,
-    currentUser: userReducer
+    currentUser: userReducer,
+    currentLeague: leagueReducer
   });
   
   export default rootReducer;

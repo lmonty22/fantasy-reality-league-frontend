@@ -4,6 +4,10 @@ const setUser = (user) => {
     return {type: 'NEW_USER', payload: user}
 }
 
+const setLeague = (league) => {
+    return {type: 'SET_CURRENT_LEAGUE', payload: league}
+}
+
 const fetchUser = (username)=> {
     return async(dispatch) => {
     try{ 
@@ -21,5 +25,22 @@ const fetchUser = (username)=> {
     }
 }
 
+const postLeague = (obj) => {
+    return async(dispatch) => {
+        try {
+            const response = await fetch(URL+'leagues', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(obj)
+            })
+            const league = await response.json()
+            dispatch(setLeague(league))
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+}
 
-export {fetchUser}
+
+export {fetchUser, postLeague}

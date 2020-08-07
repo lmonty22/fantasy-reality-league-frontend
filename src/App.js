@@ -22,7 +22,7 @@ const App = (props) => {
             <Switch>
           <Route exact path="/" render={() => <div>This is the homepage</div>}/>
           <Route exact path='/login' render={() => props.currentUser? <Redirect to='/profile'/>: <Login/>} />
-          <Route exact path='/newleague' component={LeagueForm}/>
+          <Route exact path='/newleague' render={() => props.currentUser? <LeagueForm />: <Redirect to='/login'/>}/>
           <Route exact path='/profile' render={() => props.currentUser?  <ProfilePage/>: <Redirect to='/login'/>} />
           <Route render={()=> <div>404 No Route Found</div> } />
       </Switch> 
